@@ -1,0 +1,77 @@
+[matyoung@myoung-lap utils] $ ./dlrnapi-generate-reports.sh 
+New python executable in /home/matyoung/dashboards/delorean-metrics/utils/.venv-dlrnapi/bin/python2
+Also creating executable in /home/matyoung/dashboards/delorean-metrics/utils/.venv-dlrnapi/bin/python
+Installing setuptools, pip, wheel...done.
+Collecting git+https://github.com/javierpena/dlrnapi_client.git
+  Cloning https://github.com/javierpena/dlrnapi_client.git to /tmp/pip-nSygPr-build
+Collecting certifi>=14.05.14 (from dlrnapi-client==0.2.1.dev3)
+  Using cached certifi-2017.7.27.1-py2.py3-none-any.whl
+Collecting six>=1.10 (from dlrnapi-client==0.2.1.dev3)
+  Using cached six-1.11.0-py2.py3-none-any.whl
+Collecting python_dateutil>=2.5.3 (from dlrnapi-client==0.2.1.dev3)
+  Using cached python_dateutil-2.6.1-py2.py3-none-any.whl
+Requirement already satisfied: setuptools>=21.0.0 in ./.venv-dlrnapi/lib/python2.7/site-packages (from dlrnapi-client==0.2.1.dev3)
+Collecting urllib3>=1.15.1 (from dlrnapi-client==0.2.1.dev3)
+  Using cached urllib3-1.22-py2.py3-none-any.whl
+Installing collected packages: certifi, six, python-dateutil, urllib3, dlrnapi-client
+  Running setup.py install for dlrnapi-client ... done
+Successfully installed certifi-2017.7.27.1 dlrnapi-client-0.2.1.dev3 python-dateutil-2.6.1 six-1.11.0 urllib3-1.22
+
+==================
+promotions: master
+==================
++ release=master
++ ./dlrnapi-get-promotions.py -r master
++ ./dlrnapi-get-promotions.py -r master -n tripleo-ci-testing
++ ./dlrnapi-get-promotions.py -r master -n current-tripleo-rdo
++ ./dlrnapi-get-promotions.py -r master -n current-tripleo-rdo-internal
++ set +x
+==================
+promotions: pike
+==================
++ release=pike
++ ./dlrnapi-get-promotions.py -r pike
++ ./dlrnapi-get-promotions.py -r pike -n tripleo-ci-testing
++ ./dlrnapi-get-promotions.py -r pike -n current-tripleo-rdo
++ ./dlrnapi-get-promotions.py -r pike -n current-tripleo-rdo-internal
++ set +x
+=================
+promotions: ocata
+=================
++ release=ocata
++ ./dlrnapi-get-promotions.py -r ocata
++ ./dlrnapi-get-promotions.py -r ocata -n tripleo-ci-testing
++ ./dlrnapi-get-promotions.py -r ocata -n current-tripleo-rdo
++ ./dlrnapi-get-promotions.py -r ocata -n current-tripleo-rdo-internal
++ set +x
+==================
+promotions: newton
+==================
++ release=newton
++ ./dlrnapi-get-promotions.py -r newton
++ ./dlrnapi-get-promotions.py -r newton -n tripleo-ci-testing
++ ./dlrnapi-get-promotions.py -r newton -n current-tripleo-rdo
++ ./dlrnapi-get-promotions.py -r newton -n current-tripleo-rdo-internal
++ set +x
+
+Reports are here: /tmp/dlrnapi-reports
+total 108
+drwxrwxr-x.  2 matyoung matyoung   360 Oct 11 00:27 ./
+drwxrwxrwt. 31 root     root      1220 Oct 11 00:26 ../
+-rw-rw-r--.  1 matyoung matyoung 14150 Oct 11 00:26 master-combined.txt
+-rw-rw-r--.  1 matyoung matyoung   755 Oct 11 00:27 master-current-tripleo-rdo-internal.txt
+-rw-rw-r--.  1 matyoung matyoung     0 Oct 11 00:27 master-current-tripleo-rdo.txt
+-rw-rw-r--.  1 matyoung matyoung 14100 Oct 11 00:27 master-tripleo-ci-testing.txt
+-rw-rw-r--.  1 matyoung matyoung  4545 Oct 11 00:27 newton-combined.txt
+-rw-rw-r--.  1 matyoung matyoung   453 Oct 11 00:27 newton-current-tripleo-rdo-internal.txt
+-rw-rw-r--.  1 matyoung matyoung     0 Oct 11 00:27 newton-current-tripleo-rdo.txt
+-rw-rw-r--.  1 matyoung matyoung  3948 Oct 11 00:27 newton-tripleo-ci-testing.txt
+-rw-rw-r--.  1 matyoung matyoung  5550 Oct 11 00:27 ocata-combined.txt
+-rw-rw-r--.  1 matyoung matyoung  1350 Oct 11 00:27 ocata-current-tripleo-rdo-internal.txt
+-rw-rw-r--.  1 matyoung matyoung     0 Oct 11 00:27 ocata-current-tripleo-rdo.txt
+-rw-rw-r--.  1 matyoung matyoung  4200 Oct 11 00:27 ocata-tripleo-ci-testing.txt
+-rw-rw-r--.  1 matyoung matyoung 13863 Oct 11 00:27 pike-combined.txt
+-rw-rw-r--.  1 matyoung matyoung  1341 Oct 11 00:27 pike-current-tripleo-rdo-internal.txt
+-rw-rw-r--.  1 matyoung matyoung     0 Oct 11 00:27 pike-current-tripleo-rdo.txt
+-rw-rw-r--.  1 matyoung matyoung 13900 Oct 11 00:27 pike-tripleo-ci-testing.txt
+

@@ -1,0 +1,61 @@
+[matyoung@myoung-lap utils] $ virtualenv .venv
+New python executable in /home/matyoung/dashboards/delorean-metrics/utils/.venv/bin/python2
+Also creating executable in /home/matyoung/dashboards/delorean-metrics/utils/.venv/bin/python
+Installing setuptools, pip, wheel...done.
+[matyoung@myoung-lap utils] $ source .venv/bin/activate
+(.venv) [matyoung@myoung-lap utils] $ pip install -r requirements-dlrnapi-get-promotions.txt 
+Collecting git+https://github.com/javierpena/dlrnapi_client.git (from -r requirements-dlrnapi-get-promotions.txt (line 1))
+  Cloning https://github.com/javierpena/dlrnapi_client.git to /tmp/pip-vcEwqe-build
+Collecting certifi>=14.05.14 (from dlrnapi-client==0.2.1.dev3->-r requirements-dlrnapi-get-promotions.txt (line 1))
+  Using cached certifi-2017.7.27.1-py2.py3-none-any.whl
+Collecting six>=1.10 (from dlrnapi-client==0.2.1.dev3->-r requirements-dlrnapi-get-promotions.txt (line 1))
+  Using cached six-1.11.0-py2.py3-none-any.whl
+Collecting python_dateutil>=2.5.3 (from dlrnapi-client==0.2.1.dev3->-r requirements-dlrnapi-get-promotions.txt (line 1))
+  Using cached python_dateutil-2.6.1-py2.py3-none-any.whl
+Requirement already satisfied: setuptools>=21.0.0 in ./.venv/lib/python2.7/site-packages (from dlrnapi-client==0.2.1.dev3->-r requirements-dlrnapi-get-promotions.txt (line 1))
+Collecting urllib3>=1.15.1 (from dlrnapi-client==0.2.1.dev3->-r requirements-dlrnapi-get-promotions.txt (line 1))
+  Using cached urllib3-1.22-py2.py3-none-any.whl
+Installing collected packages: certifi, six, python-dateutil, urllib3, dlrnapi-client
+  Running setup.py install for dlrnapi-client ... done
+Successfully installed certifi-2017.7.27.1 dlrnapi-client-0.2.1.dev3 python-dateutil-2.6.1 six-1.11.0 urllib3-1.22
+(.venv) [matyoung@myoung-lap utils] $ ./dlrnapi-get-promotions.py --release ocata
+2017-10-10 20:12:32, https://trunk.rdoproject.org/centos7-ocata/5d/c9/5dc988d1f6c2cb576ef7db942c691e13ff29086f_a28e2688, tripleo-ci-testing
+2017-10-10 07:17:25, https://trunk.rdoproject.org/centos7-ocata/29/b8/29b873f37e5d12ddebe0f95594dc123b929a91f2_83455ae9, current-tripleo-rdo-internal
+2017-10-10 05:43:32, https://trunk.rdoproject.org/centos7-ocata/0c/3e/0c3e97a5ae138a1f9a343be81b3c54bf5ed4daba_214eedcb, tripleo-ci-testing
+2017-10-08 20:06:16, https://trunk.rdoproject.org/centos7-ocata/74/72/7472409f6f79de0efd21dc59b2f37451cedf54fb_b4ee4c4c, tripleo-ci-testing
+2017-10-08 08:47:02, https://trunk.rdoproject.org/centos7-ocata/29/b8/29b873f37e5d12ddebe0f95594dc123b929a91f2_83455ae9, current-tripleo-rdo-internal
+2017-10-07 20:11:13, https://trunk.rdoproject.org/centos7-ocata/29/b8/29b873f37e5d12ddebe0f95594dc123b929a91f2_83455ae9, tripleo-ci-testing
+2017-10-07 09:47:57, https://trunk.rdoproject.org/centos7-ocata/c2/aa/c2aa30b102808882c85d3d3f53d531c4510218cd_ce6b0fa4, current-tripleo-rdo-internal
+2017-10-06 20:08:26, https://trunk.rdoproject.org/centos7-ocata/d6/93/d6934de3ebf102162678b24c130c51128453e4f2_01c765ae, tripleo-ci-testing
+2017-10-06 15:15:47, https://trunk.rdoproject.org/centos7-ocata/c2/aa/c2aa30b102808882c85d3d3f53d531c4510218cd_ce6b0fa4, current-tripleo-rdo-internal
+2017-10-05 20:08:20, https://trunk.rdoproject.org/centos7-ocata/93/b9/93b97c924c53c538252c7ce9647b3fe6bd1f6193_a28e2688, tripleo-ci-testing
+2017-10-05 00:58:12, https://trunk.rdoproject.org/centos7-ocata/0c/08/0c087f9cf412a0889f4082e036db3e850f90b6ed_1edce40d, current-tripleo-rdo-internal
+2017-10-04 20:11:49, https://trunk.rdoproject.org/centos7-ocata/af/e3/afe33e79465af48a367bfe5865f1c592eb1f47e8_ce6b0fa4, tripleo-ci-testing
+2017-10-04 04:03:15, https://trunk.rdoproject.org/centos7-ocata/0c/08/0c087f9cf412a0889f4082e036db3e850f90b6ed_1edce40d, tripleo-ci-testing
+2017-10-02 20:08:12, https://trunk.rdoproject.org/centos7-ocata/be/82/be828c35d84f8f10b07f11aa8bbf195a44e730f8_c96e6528, tripleo-ci-testing
+2017-10-01 20:09:20, https://trunk.rdoproject.org/centos7-ocata/be/82/be828c35d84f8f10b07f11aa8bbf195a44e730f8_c96e6528, tripleo-ci-testing
+2017-09-30 20:11:53, https://trunk.rdoproject.org/centos7-ocata/be/82/be828c35d84f8f10b07f11aa8bbf195a44e730f8_c96e6528, tripleo-ci-testing
+2017-09-30 08:33:28, https://trunk.rdoproject.org/centos7-ocata/fc/b7/fcb7f307bcbff2a980bda80c597aaa5369fcbd46_b01d514c, current-tripleo-rdo-internal
+2017-09-29 20:07:13, https://trunk.rdoproject.org/centos7-ocata/be/82/be828c35d84f8f10b07f11aa8bbf195a44e730f8_c96e6528, tripleo-ci-testing
+2017-09-29 07:09:41, https://trunk.rdoproject.org/centos7-ocata/35/ab/35ab6a5da363aa10c8fa88df0a388ad6518164e7_1b9fef7f, current-tripleo-rdo-internal
+2017-09-29 03:52:04, https://trunk.rdoproject.org/centos7-ocata/2c/a4/2ca4cd49ec61058ac60b82704ee8f07eaf767562_b2b0d1a3, tripleo-ci-testing
+2017-09-28 06:52:47, https://trunk.rdoproject.org/centos7-ocata/35/ab/35ab6a5da363aa10c8fa88df0a388ad6518164e7_1b9fef7f, current-tripleo-rdo-internal
+2017-09-27 20:07:40, https://trunk.rdoproject.org/centos7-ocata/fc/b7/fcb7f307bcbff2a980bda80c597aaa5369fcbd46_b01d514c, tripleo-ci-testing
+2017-09-26 20:11:42, https://trunk.rdoproject.org/centos7-ocata/e5/44/e544ebc8593644cee314526725570a471b77222f_84c44f89, tripleo-ci-testing
+2017-09-26 12:26:59, https://trunk.rdoproject.org/centos7-ocata/1e/ea/1eeaf432b7be2571ac53330c45d96f68ffae5a5d_e561e4a0, tripleo-ci-testing
+2017-09-26 05:37:02, https://trunk.rdoproject.org/centos7-ocata/8f/36/8f368ed3e1f94003e9faa5c647dd9d568a6fea60_2f0689d7, tripleo-ci-testing
+2017-09-25 20:10:49, https://trunk.rdoproject.org/centos7-ocata/16/91/1691c65261fc0916cb20a83e5b91d9da380a44bd_19239ca4, tripleo-ci-testing
+2017-09-24 20:03:41, https://trunk.rdoproject.org/centos7-ocata/d5/cd/d5cde63cb4256b52bb2b8fbbff09ad491dcd19a9_cbf07981, tripleo-ci-testing
+2017-09-23 20:06:59, https://trunk.rdoproject.org/centos7-ocata/d5/cd/d5cde63cb4256b52bb2b8fbbff09ad491dcd19a9_cbf07981, tripleo-ci-testing
+2017-09-22 20:07:35, https://trunk.rdoproject.org/centos7-ocata/e4/3e/e43e891a2f64c5aec2667b7d16d1c170c202b792_d95f3f09, tripleo-ci-testing
+2017-09-21 18:56:24, https://trunk.rdoproject.org/centos7-ocata/64/03/640367a18385c93a98e70f4e4161bdbafe66a4eb_e4a64b7c, current-tripleo-rdo-internal
+2017-09-19 20:08:29, https://trunk.rdoproject.org/centos7-ocata/05/d3/05d31f7be0d51099af5393627152180a1686f96d_e0f4cca7, tripleo-ci-testing
+2017-09-18 20:07:04, https://trunk.rdoproject.org/centos7-ocata/48/b5/48b5c91ad73e74a8e35b3649b0433ba86d6bdf06_06c882f3, tripleo-ci-testing
+2017-09-17 20:04:11, https://trunk.rdoproject.org/centos7-ocata/69/32/6932391c8dea4d327bbda06de61ecb7e573a9bd3_87de13f3, tripleo-ci-testing
+2017-09-16 20:08:05, https://trunk.rdoproject.org/centos7-ocata/69/32/6932391c8dea4d327bbda06de61ecb7e573a9bd3_87de13f3, tripleo-ci-testing
+2017-09-15 20:06:17, https://trunk.rdoproject.org/centos7-ocata/c4/16/c416369d3806649fd05c3e5459ad64953b00bc3c_a28e2688, tripleo-ci-testing
+2017-09-14 20:05:26, https://trunk.rdoproject.org/centos7-ocata/80/19/8019c2234c8b781b168bf8934e900720b23313bd_a28e2688, tripleo-ci-testing
+2017-09-13 20:06:49, https://trunk.rdoproject.org/centos7-ocata/69/c7/69c715c505cf9e5df29dc1dff2fa1a4847471cb6_1b9fef7f, tripleo-ci-testing
+2017-09-12 20:07:53, https://trunk.rdoproject.org/centos7-ocata/5b/75/5b754035e1ea0d50faa5f17cb7db600a11f18606_a28e2688, tripleo-ci-testing
+2017-09-11 20:05:15, https://trunk.rdoproject.org/centos7-ocata/64/03/640367a18385c93a98e70f4e4161bdbafe66a4eb_e4a64b7c, tripleo-ci-testing
+
