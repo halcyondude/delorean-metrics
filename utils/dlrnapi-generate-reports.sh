@@ -30,6 +30,7 @@ function print_promotion_report()
     release=$1
     ./dlrnapi-get-promotions.py -r $release                                 > $dest/$release-combined.txt
     ./dlrnapi-get-promotions.py -r $release -n tripleo-ci-testing           > $dest/$release-tripleo-ci-testing.txt
+    ./dlrnapi-get-promotions.py -r $release -n current-tripleo              > $dest/$release-current-tripleo.txt
     ./dlrnapi-get-promotions.py -r $release -n current-tripleo-rdo          > $dest/$release-current-tripleo-rdo.txt
     ./dlrnapi-get-promotions.py -r $release -n current-tripleo-rdo-internal > $dest/$release-current-tripleo-rdo-internal.txt
 
@@ -67,3 +68,4 @@ print_promotion_report newton
 echo ""
 echo "Reports are here: $dest"
 ls -laF $dest
+
