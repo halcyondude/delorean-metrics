@@ -4,4 +4,4 @@ gem 'smashing'
 gem 'ruby_dlrnapi', :git => 'https://github.com/halcyondude/ruby_dlrnapi.git'
 
 ## Remove this if you don't need a twitter widget.
-#gem 'twitter', '>= 5.9.0'
+gem 'twitter', '>= 5.9.0'
