@@ -15,12 +15,18 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-set -x
+echo ""
+echo "*** Removing '.venv-dlrnapi' if(exists), and creating a virtualenv for dlrnapi"
+echo ""
 
 # remove existing venv
 rm -rf .venv-dlrnapi
 
-# create virtualenv so dlrnap requirements are sandboxed
+# create virtualenv so dlrnap requirements are sandboxed.
+
+echo "*** Using virtualenv with '--no-site-packages' to avoid known centos/fedora/rhel packaging nrv depency issues"
+echo ""
+
 virtualenv --no-site-packages .venv-dlrnapi
 
 # enter the venv
@@ -31,3 +37,6 @@ pip install pip -U
 
 pip install -r requirements-dlrnapi.txt
 
+echo ""
+echo "*** Don't forget to 'source .venv-dlrnapi/bin/activate' - Use 'dlrnapi --help' for more details."
+echo ""
