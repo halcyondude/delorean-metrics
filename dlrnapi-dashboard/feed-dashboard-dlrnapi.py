@@ -115,10 +115,10 @@ def update_dashboard_promotion_tile(dashurl, release, promote_name):
             widget_url = get_promo_widget_url(dashurl, release, promote_name)
 
             # TODO: pull out auth token in a better way
-            postdata = { "auth_token": "YOUR_AUTH_TOKEN", 
-                         "text": hash_id, 
-                         "moreinfo": delorean_url,
-                         "updatedAtMessage": ts.isoformat() }
+            postdata = { "auth_token": "YOUR_AUTH_TOKEN",
+                         "hash_id": hash_id,
+                         "delorean_url": delorean_url,
+                         "promots": ts.isoformat() }
 
             json_payload = json.dumps(postdata)
 
