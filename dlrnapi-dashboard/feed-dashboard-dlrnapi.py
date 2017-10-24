@@ -37,7 +37,6 @@ from dlrnapi_client.rest import ApiException
 parser = argparse.ArgumentParser(description="display promotion status for RDO releases.  Pike is the default release.",
                                  formatter_class=lambda prog: argparse.HelpFormatter(prog, max_help_position=25,width=180))
 
-parser.add_argument("-r", "--release", choices=['master', 'pike', 'ocata', 'newton'])
 parser.add_argument("-d", "--dashboard", help='default to http://localhost:3030, useful for testing')
 parser.add_argument("-v", "--verbose")
 
@@ -45,10 +44,6 @@ args = parser.parse_args()
 
 if not args.dashboard:
     args.dashboard = 'http://localhost:3030'
-
-# TODO: this can probably go away?  really we should update all releases...for now leave it as we're prototyping with pike
-if not args.release:
-    args.release = "pike"
 
 ##################################################
 
@@ -195,10 +190,16 @@ def update_dashboard_promotion_activity(dashurl, release):
 
 ###
 
-update_dashboard_promotion_tile(args.dashboard, args.release, 'current-tripleo')
-update_dashboard_promotion_tile(args.dashboard, args.release, 'current-tripleo-rdo')
-update_dashboard_promotion_tile(args.dashboard, args.release, 'current-tripleo-rdo-internal')
+def update_dashboard(dashboard, release):
+    update_dashboard_promotion_tile(dashboard, release, 'current-tripleo')
+    update_dashboard_promotion_tile(dashboard, release, 'current-tripleo-rdo')
+    update_dashboard_promotion_tile(dashboard, release, 'current-tripleo-rdo-internal')
 
-update_dashboard_promotion_activity(args.dashboard, args.release)
+    update_dashboard_promotion_activity(dashboard, release)
 
-# TODO: add combined view (name is None)
+#####
+# update dashboards from delorean api
+#####
+update_dashboard(args.dashboard, 'master')
+update_dashboard(args.dashboard, 'pike')
+update_dashboard(args.dashboard, 'ocata')
