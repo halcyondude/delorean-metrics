@@ -28,6 +28,7 @@ import time
 from pprint import pprint
 import json
 import requests
+from urllib import urlopen
 
 import dlrnapi_client
 from dlrnapi_client.rest import ApiException
@@ -118,12 +119,18 @@ def update_dashboard_promotion_tile(dashurl, release, promote_name):
         # first in the list is most recent
         promo = api_response[0]
 
-        ts = datetime.fromtimestamp(promo.timestamp)
+        promote_ts = datetime.fromtimestamp(promo.timestamp)
 
         # RFE: Propose API change.  This is also needlessly forcing clients of the API to understand RDO infra.
         dlrn_base_url = "https://trunk.rdoproject.org/centos7-%s" % release
         delorean_url = get_url_from_commit_distro(promo.commit_hash, promo.distro_hash, dlrn_base_url)
         hash_id = get_shorthash_from_commit_distro(promo.commit_hash, promo.distro_hash)
+
+        # fetch the timestamp of the delorean.repo file (when this repo was last touched by delorean)
+        f=urlopen('%s/delorean.repo' % delorean_url)
+        i = f.info()
+        lastmod = i.getdate('last-modified')
+        lastmod_ts = datetime.fromtimestamp(time.mktime(lastmod))
 
         widget_url = get_promotext_widget_url(dashurl, release, promote_name)
 
@@ -131,7 +138,8 @@ def update_dashboard_promotion_tile(dashurl, release, promote_name):
         postdata = { "auth_token": "YOUR_AUTH_TOKEN",
                      "hash_id": hash_id,
                      "delorean_url": delorean_url,
-                     "promote_ts": ts.strftime("%Y-%m-%d %H:%M") }
+                     "promote_ts": promote_ts.strftime("%Y-%m-%d %H:%M"),
+                     "lastmod_ts": lastmod_ts.strftime("%Y-%m-%d %H:%M") }
 
         json_payload = json.dumps(postdata)
 
