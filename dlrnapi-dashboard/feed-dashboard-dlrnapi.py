@@ -76,26 +76,33 @@ map_version_to_endpoint = {'master'  : 'https://trunk.rdoproject.org/api-centos-
 def get_endpoint(release):
     return map_version_to_endpoint[release]
 
-# name used for Text widgets that contain the most recent promoted url
-def get_promo_widget_url(dashurl, release, promote_name):
-    # TODO: parameter validation
-    map_name_to_widget = {'current-tripleo'              : 'promo_%s_ooo'  % release,
-                          'current-tripleo-rdo'          : 'promo_%s_rdo1' % release,
-                          'current-tripleo-rdo-internal' : 'promo_%s_rdo2' % release}
+# Promotext widgets that contain the most recent promoted url
+def get_promotext_widget_url(dashurl, release, promote_name):
+
+    map_name_to_widget = {'current-tripleo'              : 'promotext_%s_ooo'  % release,
+                          'current-tripleo-rdo'          : 'promotext_%s_rdo1' % release,
+                          'current-tripleo-rdo-internal' : 'promotext_%s_rdo2' % release}
 
     widget = map_name_to_widget[promote_name]
     url = "%s/widgets/%s" % (dashurl, widget)
-
     return url
 
-def update_dashboard_promotion_tile(dashurl, release, promote_name):
+# Promolist widget
+def get_promoactivity_widget_url(dashurl, release):
+
+    widget = 'promolist_%s_all' % release
+    url = "%s/widgets/%s" % (dashurl, widget)
+    return url
+
+#
+def get_promotions(release, promote_name):
 
     host = get_endpoint(release)
- 
+
     api_client = dlrnapi_client.ApiClient(host=host)
     api_instance = dlrnapi_client.DefaultApi(api_client=api_client)
     params = dlrnapi_client.PromotionQuery()
-    
+
     if promote_name:
         params.promote_name = promote_name
 
@@ -105,6 +112,13 @@ def update_dashboard_promotion_tile(dashurl, release, promote_name):
     except ApiException as e:
         print("Exception when calling DefaultApi->api_promotions_get: %s\n" % e)
 
+    return api_response
+
+#
+def update_dashboard_promotion_tile(dashurl, release, promote_name):
+
+    api_response = get_promotions(release, promote_name)
+
     if api_response:
         # first in the list is most recent
         promo = api_response[0]
@@ -112,11 +126,11 @@ def update_dashboard_promotion_tile(dashurl, release, promote_name):
         ts = datetime.fromtimestamp(promo.timestamp)
 
         # RFE: Propose API change.  This is also needlessly forcing clients of the API to understand RDO infra.
-        dlrn_base_url = "https://trunk.rdoproject.org/centos7-%s" % args.release
+        dlrn_base_url = "https://trunk.rdoproject.org/centos7-%s" % release
         delorean_url = get_url_from_commit_distro(promo.commit_hash, promo.distro_hash, dlrn_base_url)
         hash_id = get_shorthash_from_commit_distro(promo.commit_hash, promo.distro_hash)
 
-        widget_url = get_promo_widget_url(dashurl, release, promote_name)
+        widget_url = get_promotext_widget_url(dashurl, release, promote_name)
 
         # TODO: pull out auth token in a better way
         postdata = { "auth_token": "YOUR_AUTH_TOKEN",
@@ -128,34 +142,63 @@ def update_dashboard_promotion_tile(dashurl, release, promote_name):
 
         r = requests.post(widget_url, data = json_payload)
 
+        pprint('*** UPDATE %s' % widget_url)
+        pprint(postdata)
+        pprint('*** RETURN')
         pprint(vars(r))
 
-def update_dashboard_promotion_activity(dashurl, release, promote_name):
+#
+def update_dashboard_promotion_activity(dashurl, release):
 
-    host = get_endpoint(release)
+    # no promote _name --> all activity
+    api_response = get_promotions(release, None)
 
-    api_client = dlrnapi_client.ApiClient(host=host)
-    api_instance = dlrnapi_client.DefaultApi(api_client=api_client)
-    params = dlrnapi_client.PromotionQuery()
-
-    if promote_name:
-        params.promote_name = promote_name
-
-    try:
-        api_response = api_instance.api_promotions_get(params)
-
-    except ApiException as e:
-        print("Exception when calling DefaultApi->api_promotions_get: %s\n" % e)
-
-    #if api_response:
+    items = list()
 
 
+    for promo in api_response:
 
+        # for now filter these out
+        if promo.promote_name == 'tripleo-ci-testing':
+            continue
+
+        if len(items) > 30:
+            break
+
+        ts = datetime.fromtimestamp(promo.timestamp)
+
+        # RFE: Propose API change.  This is also needlessly forcing clients of the API to understand RDO infra.
+        dlrn_base_url = "https://trunk.rdoproject.org/centos7-%s" % release
+        delorean_url = get_url_from_commit_distro(promo.commit_hash, promo.distro_hash, dlrn_base_url)
+        hash_id = get_shorthash_from_commit_distro(promo.commit_hash, promo.distro_hash)
+
+        # TODO: pass thru delorean_url and make a link within the <li>
+
+        #  ts: val,  ts := "2017-05-04 09:00",  val := "01234567 (current-tripleo-rdo-internal)"
+        item = { "label": ts.strftime("%Y-%m-%d %H:%M"), "value": '%s %s' % (promo.promote_name, hash_id)}
+
+        items.append(item)
+
+    # TODO: pull out auth token in a better way
+    postdata = {"auth_token": "YOUR_AUTH_TOKEN",
+                "items": items}
+
+    widget_url = get_promoactivity_widget_url(dashurl, release)
+    json_payload = json.dumps(postdata)
+
+    r = requests.post(widget_url, data=json_payload)
+
+    pprint('*** UPDATE %s' % widget_url)
+    pprint(postdata)
+    pprint('*** RETURN')
+    pprint(vars(r))
 
 ###
 
 update_dashboard_promotion_tile(args.dashboard, args.release, 'current-tripleo')
 update_dashboard_promotion_tile(args.dashboard, args.release, 'current-tripleo-rdo')
 update_dashboard_promotion_tile(args.dashboard, args.release, 'current-tripleo-rdo-internal')
+
+update_dashboard_promotion_activity(args.dashboard, args.release)
 
 # TODO: add combined view (name is None)
