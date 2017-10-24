@@ -64,7 +64,10 @@ def get_url_from_commit_distro(commit, distro, base_url):
 def get_shorthash_from_commit_distro(commit, distro):
     return (commit + '_' + distro[:8])
 
-# TODO: does python have a static specifier?
+
+#
+#
+#
 map_version_to_endpoint = {'master'  : 'https://trunk.rdoproject.org/api-centos-master-uc',
                            'pike'    : 'https://trunk.rdoproject.org/api-centos-pike',
                            'ocata'   : 'https://trunk.rdoproject.org/api-centos-ocata',
@@ -99,35 +102,55 @@ def update_dashboard_promotion_tile(dashurl, release, promote_name):
     try:
         api_response = api_instance.api_promotions_get(params)
 
-        # TODO: how does scoping in python work?  can i end exception block here?
+    except ApiException as e:
+        print("Exception when calling DefaultApi->api_promotions_get: %s\n" % e)
 
-        if api_response:
-            # first in the list is most recent
-            promo = api_response[0]
+    if api_response:
+        # first in the list is most recent
+        promo = api_response[0]
 
-            ts = datetime.fromtimestamp(promo.timestamp)
+        ts = datetime.fromtimestamp(promo.timestamp)
 
-            # RFE: Propose API change.  This is also needlessly forcing clients of the API to understand RDO infra.  
-            dlrn_base_url = "https://trunk.rdoproject.org/centos7-%s" % args.release
-            delorean_url = get_url_from_commit_distro(promo.commit_hash, promo.distro_hash, dlrn_base_url)
-            hash_id = get_shorthash_from_commit_distro(promo.commit_hash, promo.distro_hash)
+        # RFE: Propose API change.  This is also needlessly forcing clients of the API to understand RDO infra.
+        dlrn_base_url = "https://trunk.rdoproject.org/centos7-%s" % args.release
+        delorean_url = get_url_from_commit_distro(promo.commit_hash, promo.distro_hash, dlrn_base_url)
+        hash_id = get_shorthash_from_commit_distro(promo.commit_hash, promo.distro_hash)
 
-            widget_url = get_promo_widget_url(dashurl, release, promote_name)
+        widget_url = get_promo_widget_url(dashurl, release, promote_name)
 
-            # TODO: pull out auth token in a better way
-            postdata = { "auth_token": "YOUR_AUTH_TOKEN",
-                         "hash_id": hash_id,
-                         "delorean_url": delorean_url,
-                         "promots": ts.isoformat() }
+        # TODO: pull out auth token in a better way
+        postdata = { "auth_token": "YOUR_AUTH_TOKEN",
+                     "hash_id": hash_id,
+                     "delorean_url": delorean_url,
+                     "promote_ts": ts.strftime("%Y-%m-%d %H:%M") }
 
-            json_payload = json.dumps(postdata)
+        json_payload = json.dumps(postdata)
 
-            r = requests.post(widget_url, data = json_payload)
+        r = requests.post(widget_url, data = json_payload)
 
-            pprint(vars(r))
+        pprint(vars(r))
+
+def update_dashboard_promotion_activity(dashurl, release, promote_name):
+
+    host = get_endpoint(release)
+
+    api_client = dlrnapi_client.ApiClient(host=host)
+    api_instance = dlrnapi_client.DefaultApi(api_client=api_client)
+    params = dlrnapi_client.PromotionQuery()
+
+    if promote_name:
+        params.promote_name = promote_name
+
+    try:
+        api_response = api_instance.api_promotions_get(params)
 
     except ApiException as e:
         print("Exception when calling DefaultApi->api_promotions_get: %s\n" % e)
+
+    #if api_response:
+
+
+
 
 ###
 
