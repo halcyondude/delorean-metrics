@@ -19,13 +19,7 @@ gem install --user-install bundler
 gem install --user-install smashing
 ```
 
-##### You can make a new boilerplate dashboard with:
-
-```bash
-smashing new my-dashboard-name
-```
-
-or you can bundle up the existing dlrnapi-dashboard with...
+##### bundle (install ruby deps)
 
 ```bash
 git clone https://github.com/halcyondude/delorean-metrics.git
