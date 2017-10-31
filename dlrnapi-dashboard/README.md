@@ -6,6 +6,11 @@ It will show status of Ocata, Pike, and Master branches.
 
 ![Dashboard Screenshot](dlrnapi-dashboard-screenshot.png)
 
+##### What is current-tripleo?  current-tripleo-rdo? current-tripleo-rdo-internal?
+
+![Promotion Pipeline Diagram](promotion-pipeline.png)
+ 
+
 # installation directions
 
 This has been tested on Fedora 26 and RHEL 7.4
