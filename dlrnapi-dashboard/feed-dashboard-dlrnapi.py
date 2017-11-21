@@ -126,20 +126,26 @@ def update_dashboard_promotion_tile(dashurl, release, promote_name):
         delorean_url = get_url_from_commit_distro(promo.commit_hash, promo.distro_hash, dlrn_base_url)
         hash_id = get_shorthash_from_commit_distro(promo.commit_hash, promo.distro_hash)
 
+        widget_url = get_promotext_widget_url(dashurl, release, promote_name)
+
         # fetch the timestamp of the delorean.repo file (when this repo was last touched by delorean)
+        # if things don't get promoted in a while, this could be missing!
         f=urlopen('%s/delorean.repo' % delorean_url)
         i = f.info()
-        lastmod = i.getdate('last-modified')
-        lastmod_ts = datetime.fromtimestamp(time.mktime(lastmod))
 
-        widget_url = get_promotext_widget_url(dashurl, release, promote_name)
+        lastmod_ts_str = "MISSING"
+
+        if f.getcode() == 200:
+            lastmod = i.getdate('last-modified')
+            lastmod_ts = datetime.fromtimestamp(time.mktime(lastmod))
+            lastmod_ts_str = lastmod_ts.strftime("%Y-%m-%d %H:%M")
 
         # TODO: pull out auth token in a better way
         postdata = { "auth_token": "YOUR_AUTH_TOKEN",
                      "hash_id": hash_id,
                      "delorean_url": delorean_url,
                      "promote_ts": promote_ts.strftime("%Y-%m-%d %H:%M"),
-                     "lastmod_ts": lastmod_ts.strftime("%Y-%m-%d %H:%M") }
+                     "lastmod_ts": lastmod_ts_str}
 
         json_payload = json.dumps(postdata)
 
