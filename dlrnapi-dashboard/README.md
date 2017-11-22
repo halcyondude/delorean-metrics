@@ -1,6 +1,6 @@
 # What is this?
 
-The dashboard will query the [RDO delorean api](https://github.com/softwarefactory-project/DLRN/blob/master/doc/api_definition.yaml) using [dlrnapi_client](https://github.com/softwarefactory-project/dlrnapi_clienthttps://github.com/softwarefactory-project/dlrnapi_client) every 15 minutes.
+The dashboard will query the [RDO delorean api](https://github.com/softwarefactory-project/DLRN/blob/master/doc/api_definition.yaml) using [dlrnapi_client](https://github.com/softwarefactory-project/dlrnapi_client) every 15 minutes.
 
 It will show status of Ocata, Pike, and Master branches.
 
