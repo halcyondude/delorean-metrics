@@ -1,3 +1,5 @@
 *DS_STORE
 history.yml
 feed-dashboard.log
+.idea*
+Gemfile.lock

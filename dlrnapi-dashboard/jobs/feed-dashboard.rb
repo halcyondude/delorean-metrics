@@ -7,7 +7,8 @@
 feeder_script = "update-dashboard-from-smashingcron.sh"
 feeder_log = "feed-dashboard.log"
 
-SCHEDULER.every '15m', :first_at => Time.now do
+# start 3 sec from now
+SCHEDULER.every '15m', :first_at => Time.now+3 do
 
   working_dir = Dir.pwd
   abs_path_feeder_script = "#{working_dir}/#{feeder_script}"
