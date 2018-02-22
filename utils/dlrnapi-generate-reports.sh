@@ -51,6 +51,11 @@ echo "=================="
 print_promotion_report master
 
 echo "=================="
+echo "promotions: queens"
+echo "=================="
+print_promotion_report queens
+
+echo "=================="
 echo "promotions: pike"
 echo "=================="
 print_promotion_report pike

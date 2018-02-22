@@ -44,11 +44,12 @@ def get_url_from_commit_distro(commit, distro, base_uri):
 parser = argparse.ArgumentParser(description="display promotion status for RDO releases.  Pike is the default release.",
                                  formatter_class=lambda prog: argparse.HelpFormatter(prog, max_help_position=25,width=180))
 
-parser.add_argument("-r", "--release", choices=['master', 'pike', 'ocata', 'newton'])
+parser.add_argument("-r", "--release", choices=['master', 'queens', 'pike', 'ocata', 'newton'])
 parser.add_argument("-n", "--name",    choices=['tripleo-ci-testing', 'current-tripleo', 'current-tripleo-rdo', 'current-tripleo-rdo-internal'])
 args = parser.parse_args()
 
 map_version_to_endpoint = {'master'  : 'https://trunk.rdoproject.org/api-centos-master-uc',
+                           'queens'  : 'https://trunk.rdoproject.org/api-centos-queens',
                            'pike'    : 'https://trunk.rdoproject.org/api-centos-pike',
                            'ocata'   : 'https://trunk.rdoproject.org/api-centos-ocata',
                            'newton'  : 'https://trunk.rdoproject.org/api-centos-newton'}
